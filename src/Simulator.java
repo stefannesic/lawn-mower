@@ -1,5 +1,6 @@
 import java.util.List;
 
+// executes interactions between mowers and lawn
 public class Simulator {
 	private Lawn lawn;
 	private List<Mower> mowers;
@@ -9,12 +10,12 @@ public class Simulator {
 		this.mowers = m;
 	}
 	
+	// each executor runs on a separate thread
 	public class Executor extends Thread {
-		private Thread t;
 		private Mower mower;
 		
 		Executor(Mower m) {
-		      this.setMower(m);
+		      this.mower = m;
 		      System.out.println("Creating " +  m );
 		}
 	   
@@ -29,22 +30,18 @@ public class Simulator {
 		public Mower getMower() {
 			return mower;
 		}
-	
-		public void setMower(Mower mower) {
-			this.mower = mower;
-		}
-		
-		
 	}
 	
+	// runs the simulation with mowers on lawn
 	public void go() throws Exception { 
 		Thread[] threads = new Thread[this.getMowers().size()];
 		int i = 0;
 		for(Mower m: this.getMowers()) {
+			// check initials coordinates
 			int x = m.getX();
 			int y = m.getY();
-			// place a mower on the lawn
 			if (lawn.isValidMove(x, y))
+				// place a mower on the lawn
 				lawn.placeMower(x, y, m.getId());
 			else 
 				throw new Exception("Cannot intialize Mower...initial position is the same as that of another.");
@@ -54,36 +51,42 @@ public class Simulator {
 			i++;
 		}
 		
+		// wait until all threads have completed their tasks
 		for (int j = 0; j < threads.length; j++) {
 		        threads[j].join();
 		}
+		
 		System.out.println("All Done");
-		// display final positions of mowers
+		
+		// display final positions of mowers in order of appearance
 		for(Mower m: mowers) {
 			System.out.println("Final Position..."+m);
 		}
 	}
 	
+	// controller associates instruction to proper method
 	public void executeInstructions(Mower m) {
-		for(String i: m.getInstructions()) {
-			// perhaps convert character to enum type
-			switch(i) {
-			case "F":
+		Instruction[] instr = m.getInstructions();
+		for(int i = 0; i < instr.length; i++) {
+			switch(instr[i]) {
+			case F:
 				advance(m);
 				break;
-			case "L":
+			case L:
 				turnLeft(m);
 				break;
-			case "R":
+			case R:
 				turnRight(m);
 				break;
 			}
 		}
 	}
 	
+	// F instruction 
 	public void advance(Mower m) {
 		int x = 0, y = 0;
 		
+		// get current position
 		int currentX = m.getX();
 		int currentY = m.getY();
 		
@@ -101,21 +104,28 @@ public class Simulator {
 			x = -1;
 			break;
 		}
+		// get planned position
 		x = m.getX()+x;
 		y = m.getY()+y;
 		
-		
-		if (lawn.isValidMove(x, y)) {
-			System.out.println("FORWARD move started for "+m);
-			lawn.moveMower(currentX, currentY, x, y, m.getId());
-			m.setX(x);
-			m.setY(y);
-			System.out.println("FORWARD move completed for "+m);
-		} else {
-			System.out.println("FORWARD move SKIPPED for "+m);
+		// check if planned position is possible
+		// synchronized block here in case two or more try to move to the same cell
+		synchronized(lawn) {
+			if (lawn.isValidMove(x, y)) {
+				System.out.println("FORWARD move started for "+m);
+				// move on lawn
+				lawn.moveMower(currentX, currentY, x, y, m.getId());
+				// update position in object
+				m.setX(x);
+				m.setY(y);
+				System.out.println("FORWARD move completed for "+m);
+			} else {
+				System.out.println("FORWARD move SKIPPED for "+m);
+			}
 		}
 	}
 	
+	// L instruction
 	public void turnLeft(Mower m){
 		switch(m.getOrientation()) {
 			case N:
@@ -136,6 +146,7 @@ public class Simulator {
 		System.out.println("LEFT turn completed for "+m);
 	}
 	
+	// R instruction
 	public void turnRight(Mower m){
 		switch(m.getOrientation()) {
 			case N:

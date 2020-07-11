@@ -4,10 +4,10 @@ public class Mower {
 	private int X;
 	private int Y;
 	private Direction orientation;
-	private String[] instructions;
+	private Instruction[] instructions;
 	
-	public Mower(int id, int x, int y, Direction o, String[] i) {
-		this.setId(id);
+	public Mower(int id, int x, int y, Direction o, Instruction[] i) {
+		this.id = id;
 		this.X = x;
 		this.Y = y;
 		this.orientation = o;
@@ -42,30 +42,11 @@ public class Mower {
 		this.orientation = o;
 	}
 	
-	public String[] getInstructions() {
+	public Instruction[] getInstructions() {
 		return this.instructions;
 	}
 
 	public int getId() {
 		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}	
-	
-	public static Direction StringtoDirection(String d) throws Exception {
-		switch (d) {
-		case "N":
-			return Direction.N;
-		case "E":
-			return Direction.E;
-		case "S":
-			return Direction.S;
-		case "W":
-			return Direction.W;
-		default:
-			throw new Exception("String does not correspond to a direction");
-		}
 	}
 }

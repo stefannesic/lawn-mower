@@ -6,29 +6,33 @@ public class MainLauncher {
 
 	public static void main(String[] args) {
 		
+		// default file to run 
 		String filename = "instructions.txt";
 		
+		// use filename from argument if there is one
 		if (args.length > 0) {
-			// use filename from argument
 			filename = args[0];
 			System.out.println(filename);
 		}
 		
+		// parse input file
 		Parser myParser = new Parser(filename);
 		try {
 			myParser.Parse();
 		} catch (Exception e) {
 			e.printStackTrace();
+			System.exit(-1);
 		}
 		
 		// initialize simulator
 		
-		// create lawn
+		// create lawn and mowers
+		
+		// add one since the dimensions are really the coordinates of the upper right cell
 		int width = Integer.parseInt(myParser.getDimensions()[0])+1;
 		int height =  Integer.parseInt(myParser.getDimensions()[0])+1;
 		Lawn l = new Lawn(width, height);
 		
-		// create list of mowers
 		List<Mower> mowers= new ArrayList<Mower>();
 		
 		Iterator<String[]> iterator = myParser.getMowers().iterator();
@@ -37,32 +41,37 @@ public class MainLauncher {
 	    	int id =  counter;
 	    	String[] mowerString = iterator.next();
 	    	
-	    	// convert orientation to Direction type
 	    	try {
+	    		// convert direction to the Direction type
+	    		Direction d = Direction.StringtoDirection(mowerString[2]);
 	    		
-	    		Direction d = Mower.StringtoDirection(mowerString[2]);
+	    		// convert instructions to Instruction array
+				// counter starts at one above the lowest element
+	    		Instruction[] i = Instruction.StringArraytoInstruction(myParser.getInstructions().get(counter-1));
 	    		Mower m = new Mower(id, 
-						Integer.parseInt(mowerString[0]), 
-						Integer.parseInt(mowerString[1]), 
-						d, 
-						myParser.getInstructions().get(counter-1));
+							Integer.parseInt(mowerString[0]), 
+							Integer.parseInt(mowerString[1]), 
+							d, 
+							i);
 	    		
 	    		mowers.add(m);
 				counter++;
 	    	}
 	    	catch (Exception e) {
 	    		e.printStackTrace();
+	    		System.exit(-1);
 	    	}			
 	    }
 	    
 	    // create simulator
 	    Simulator s = new Simulator(l, mowers);
 	    
-	    // execute simulation
 	    try {
+		    // execute simulation
 			s.go();
 		} catch (Exception e) {
 			e.printStackTrace();
+			System.exit(-1);
 		}
 
 	}

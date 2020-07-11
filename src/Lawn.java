@@ -4,20 +4,21 @@ public class Lawn {
 	private int[][] grid;
 	
 	public Lawn(int w, int h) {
-		this.setWidth(w);
-		this.setHeight(h);
+		this.width = w;
+		this.height = h;
 		this.grid = new int[width][height];
 	}
 	
-	
+	// checks if another mower is present on the cell
 	public Boolean isOccupied(int x, int y) {
 		if (grid[x][y] != 0) {
 			return true;
-		}
-		else 
+		} else {
 			return false;
+		}
 	}
 	
+	// checks if coordinates are valid
 	public Boolean isCell(int x, int y) {
 		if (x < width && y < height && x >= 0 && y >= 0)
 			return true;
@@ -31,38 +32,19 @@ public class Lawn {
 		else
 			return false;
 	}
-
-	public int getWidth() {
-		return width;
-	}
-
-
-
-	public void setWidth(int width) {
-		this.width = width;
-	}
-
-
-
-	public int getHeight() {
-		return height;
-	}
-
-
-
-	public void setHeight(int height) {
-		this.height = height;
-	}
 	
+	// places a mower on cell 
 	public void placeMower(int x, int y, int id) {
 		grid[x][y] = id;
 	}
 	
+	// removes a mower from a cell
 	public void removeMower(int x, int y) {
 		grid[x][y] = 0;
 	}
 	
-	public synchronized void moveMower(int oldX, int oldY, int newX, int newY, int id) {
+	// moves mower from one cell to another
+	public void moveMower(int oldX, int oldY, int newX, int newY, int id) {
 		this.removeMower(oldX, oldY);
 		this.placeMower(newX, newY, id);
 	}
