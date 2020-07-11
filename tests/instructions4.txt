@@ -1,0 +1,5 @@
+4 4
+2 0 N
+FLRFFF
+2 2 E
+LRLRLRLR

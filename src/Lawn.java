@@ -20,8 +20,9 @@ public class Lawn {
 	
 	// checks if coordinates are valid
 	public Boolean isCell(int x, int y) {
-		if (x < width && y < height && x >= 0 && y >= 0)
+		if (x < width && y < height && x >= 0 && y >= 0) {
 			return true;
+		}
 		else 
 			return false;
 	}

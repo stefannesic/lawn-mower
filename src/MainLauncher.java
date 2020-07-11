@@ -7,7 +7,7 @@ public class MainLauncher {
 	public static void main(String[] args) {
 		
 		// default file to run 
-		String filename = "instructions.txt";
+		String filename = "tests/instructions8.txt";
 		
 		// use filename from argument if there is one
 		if (args.length > 0) {
@@ -30,7 +30,7 @@ public class MainLauncher {
 		
 		// add one since the dimensions are really the coordinates of the upper right cell
 		int width = Integer.parseInt(myParser.getDimensions()[0])+1;
-		int height =  Integer.parseInt(myParser.getDimensions()[0])+1;
+		int height =  Integer.parseInt(myParser.getDimensions()[1])+1;
 		Lawn l = new Lawn(width, height);
 		
 		List<Mower> mowers= new ArrayList<Mower>();
