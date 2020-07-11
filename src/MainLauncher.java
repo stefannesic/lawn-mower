@@ -7,7 +7,7 @@ public class MainLauncher {
 	public static void main(String[] args) {
 		
 		// default file to run 
-		String filename = "tests/instructions8.txt";
+		String filename = "tests/instructions.txt";
 		
 		// use filename from argument if there is one
 		if (args.length > 0) {

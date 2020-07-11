@@ -86,17 +86,17 @@ public class Parser {
 	}
 
 	// checks if dimensions are a digit followed by another 
-	public boolean validDimensions(String line) {
+	public static boolean validDimensions(String line) {
         return line.matches("\\d+ \\d+");
     }
 	
 	// checks if dimensions are two digits followed by the letters N, E, S or W
-    public boolean validMower(String line) {
+    public static boolean validMower(String line) {
         return line.matches("\\d+ \\d+ [NESW]");
     }    
     
     // checks if instructions are a sequence of the following characters: L, R, F
-    public boolean validInstructions(String line) {
+    public static boolean validInstructions(String line) {
     	return line.matches("[LRF]+");
     }
 
