@@ -32,6 +32,12 @@ public class Simulator {
 	
 	public void executeInstructions(Mower m) {
 		for(String i: m.getInstructions()) {
+			System.out.println("id:"+m.getId());
+
+			System.out.println("x:"+m.getX());
+			System.out.println("y:"+m.getY());
+			System.out.println("o:"+m.getOrientation());
+
 			// perhaps convert character to enum type
 			switch(i) {
 			case "F":
@@ -44,11 +50,20 @@ public class Simulator {
 				turnRight(m);
 				break;
 			}
+			
+			System.out.println("x:"+m.getX());
+			System.out.println("y:"+m.getY());
+			System.out.println("o:"+m.getOrientation());
+
 		}
 	}
 	
 	public void advance(Mower m) {
 		int x = 0, y = 0;
+		
+		int currentX = m.getX();
+		int currentY = m.getY();
+		
 		switch(m.getOrientation()) {
 		case N:
 			y = 1;
@@ -68,10 +83,11 @@ public class Simulator {
 		
 		
 		if (lawn.isValidMove(x, y)) {
+			lawn.placeMower(x, y, m.getId());
 			m.setX(x);
 			m.setY(y);
-			
-			lawn.placeMower(x, y, m.getId());
+			lawn.removeMower(currentX, currentY);			
+
 		}
 	}
 	

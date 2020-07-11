@@ -20,9 +20,6 @@ public class MainLauncher {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println(myParser.getDimensions()[0]);
-		System.out.println(myParser.getMowers().get(1)[2]);
-		System.out.println(myParser.getInstructions().get(1)[0]);
 		
 		// initialize simulator
 		
@@ -55,13 +52,14 @@ public class MainLauncher {
 	    	}
 	    	catch (Exception e) {
 	    		e.printStackTrace();
-	    	}
-	    	
-			
+	    	}			
 	    }
-		
-		
-
+	    
+	    // create simulator
+	    Simulator s = new Simulator(l, mowers);
+	    
+	    // execute simulation
+	    s.go();
 
 	}
 

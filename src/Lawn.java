@@ -11,14 +11,15 @@ public class Lawn {
 	
 	
 	public Boolean isOccupied(int x, int y) {
-		if (grid[x][y] != 0) 
+		if (grid[x][y] != 0) {
 			return true;
+		}
 		else 
 			return false;
 	}
 	
 	public Boolean isCell(int x, int y) {
-		if (x < width && y < height && x > 0 && y > 0)
+		if (x < width && y < height && x >= 0 && y >= 0)
 			return true;
 		else 
 			return false;
@@ -55,6 +56,10 @@ public class Lawn {
 	
 	public void placeMower(int x, int y, int id) {
 		grid[x][y] = id;
+	}
+	
+	public void removeMower(int x, int y) {
+		grid[x][y] = 0;
 	}
 	
 	
