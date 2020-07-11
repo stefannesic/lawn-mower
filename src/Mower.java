@@ -14,6 +14,10 @@ public class Mower {
 		this.instructions = i;
 	}
 	
+	public String toString() {
+		return "Mower ID:"+id+", X:"+this.getX()+", Y:"+this.getY()+", O:"+this.getOrientation();
+	}
+	
 	public int getX() {
 		return this.X;
 	}

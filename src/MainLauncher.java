@@ -59,7 +59,11 @@ public class MainLauncher {
 	    Simulator s = new Simulator(l, mowers);
 	    
 	    // execute simulation
-	    s.go();
+	    try {
+			s.go();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 

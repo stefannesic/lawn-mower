@@ -62,5 +62,10 @@ public class Lawn {
 		grid[x][y] = 0;
 	}
 	
+	public synchronized void moveMower(int oldX, int oldY, int newX, int newY, int id) {
+		this.removeMower(oldX, oldY);
+		this.placeMower(newX, newY, id);
+	}
+	
 	
 }
