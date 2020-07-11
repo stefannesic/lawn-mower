@@ -10,7 +10,7 @@ public class Lawn {
 	}
 	
 	// checks if another mower is present on the cell
-	public Boolean isOccupied(int x, int y) {
+	public boolean isOccupied(int x, int y) {
 		if (grid[x][y] != 0) {
 			return true;
 		} else {
@@ -19,7 +19,7 @@ public class Lawn {
 	}
 	
 	// checks if coordinates are valid
-	public Boolean isCell(int x, int y) {
+	public boolean isCell(int x, int y) {
 		if (x < width && y < height && x >= 0 && y >= 0) {
 			return true;
 		}
@@ -27,7 +27,7 @@ public class Lawn {
 			return false;
 	}
 	
-	public Boolean isValidMove(int x, int y) {
+	public boolean isValidMove(int x, int y) {
 		if (isCell(x,y) && !isOccupied(x,y))
 			return true;
 		else

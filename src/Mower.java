@@ -42,7 +42,7 @@ public class Mower {
 		this.orientation = o;
 	}
 	
-	public Instruction[] getInstructions() {
+	public 	Instruction[] getInstructions() {
 		return this.instructions;
 	}
 
